@@ -1,7 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 using PaymentAPI.Models;
+using System.Configuration;
+using Npgsql.EntityFrameworkCore.PostgreSQL;
+
 
 var builder = WebApplication.CreateBuilder(args);
+var Configuration = builder.Configuration;
 
 // Add services to the container.
 
@@ -11,7 +15,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<PaymentDetailContext>(options =>
-options.UseSqlServer(builder.Configuration.GetConnectionString("DevConnection")));
+    options.UseNpgsql(Configuration.GetConnectionString("DevConnection")));
 
 var app = builder.Build();
 
