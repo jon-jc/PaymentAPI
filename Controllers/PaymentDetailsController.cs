@@ -1,4 +1,4 @@
-﻿﻿using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,34 +11,30 @@ namespace PaymentAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PaymentDetailController : ControllerBase
+    public class PaymentDetailsController : ControllerBase
     {
         private readonly PaymentDetailContext _context;
 
-        public PaymentDetailController(PaymentDetailContext context)
+        public PaymentDetailsController(PaymentDetailContext context)
         {
             _context = context;
         }
 
-        // GET: api/PaymentDetail
+        // GET: api/PaymentDetails
         [HttpGet]
         public async Task<ActionResult<IEnumerable<PaymentDetail>>> GetPaymentDetails()
         {
-          if (_context.PaymentDetails == null)
-          {
-              return NotFound();
-          }
+            if (_context.PaymentDetails == null)
+            {
+                return NotFound();
+            }
             return await _context.PaymentDetails.ToListAsync();
         }
 
-        // GET: api/PaymentDetail/5
+        // GET: api/PaymentDetails/5
         [HttpGet("{id}")]
         public async Task<ActionResult<PaymentDetail>> GetPaymentDetail(int id)
         {
-          if (_context.PaymentDetails == null)
-          {
-              return NotFound();
-          }
             var paymentDetail = await _context.PaymentDetails.FindAsync(id);
 
             if (paymentDetail == null)
@@ -49,7 +45,7 @@ namespace PaymentAPI.Controllers
             return paymentDetail;
         }
 
-        // PUT: api/PaymentDetail/5
+        // PUT: api/PaymentDetails/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutPaymentDetail(int id, PaymentDetail paymentDetail)
@@ -77,32 +73,28 @@ namespace PaymentAPI.Controllers
                 }
             }
 
-            return Ok(await _context.PaymentDetails.ToListAsync());
+            return NoContent();
         }
 
-        // POST: api/PaymentDetail
+        // POST: api/PaymentDetails
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<PaymentDetail>> PostPaymentDetail(PaymentDetail paymentDetail)
         {
-          if (_context.PaymentDetails == null)
-          {
-              return Problem("Entity set 'PaymentDetailContext.PaymentDetails'  is null.");
-          }
+            if(_context.PaymentDetails == null)
+            {
+                return Problem("Entity set 'PaymentDetailContext.PaymentDetails' is null.");
+            }
             _context.PaymentDetails.Add(paymentDetail);
             await _context.SaveChangesAsync();
 
-            return Ok(await _context.PaymentDetails.ToListAsync());
+            return CreatedAtAction("GetPaymentDetail", new { id = paymentDetail.PaymentDetailId }, paymentDetail);
         }
 
-        // DELETE: api/PaymentDetail/5
+        // DELETE: api/PaymentDetails/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePaymentDetail(int id)
         {
-            if (_context.PaymentDetails == null)
-            {
-                return NotFound();
-            }
             var paymentDetail = await _context.PaymentDetails.FindAsync(id);
             if (paymentDetail == null)
             {
@@ -112,12 +104,12 @@ namespace PaymentAPI.Controllers
             _context.PaymentDetails.Remove(paymentDetail);
             await _context.SaveChangesAsync();
 
-            return Ok(await _context.PaymentDetails.ToListAsync());
+            return NoContent();
         }
 
         private bool PaymentDetailExists(int id)
         {
-            return (_context.PaymentDetails?.Any(e => e.PaymentDetailId == id)).GetValueOrDefault();
+            return _context.PaymentDetails.Any(e => e.PaymentDetailId == id);
         }
     }
 }

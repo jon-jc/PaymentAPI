@@ -1,4 +1,4 @@
-﻿﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PaymentAPI.Models
@@ -9,14 +9,11 @@ namespace PaymentAPI.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)] // Ensures auto-increment
         public int PaymentDetailId { get; set; }
 
-<<<<<<< HEAD
+
         [Required]
         [Column(TypeName = "varchar(100)")]
         public string CardOwnerName { get; set; } = string.Empty; // Default to an empty string
-=======
-        [Column(TypeName ="nvarchar(100)")]
-        public string CardOwnerName { get; set; } = "";
->>>>>>> 7eea433636bffd190cba9525d22af8ed9bdf97aa
+
 
         [Required]
         [Column(TypeName = "varchar(16)")]
