@@ -9,9 +9,11 @@ namespace PaymentAPI.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)] // Ensures auto-increment
         public int PaymentDetailId { get; set; }
 
+
         [Required]
         [Column(TypeName = "varchar(100)")]
         public string CardOwnerName { get; set; } = string.Empty; // Default to an empty string
+
 
         [Required]
         [Column(TypeName = "varchar(16)")]
